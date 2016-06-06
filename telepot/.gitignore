@@ -1,0 +1,8 @@
+*.pyc
+telepot.egg-info/
+dist/
+.idea/
+todo.txt
+.remote-sync.json
+.pypirc
+qpull.py
