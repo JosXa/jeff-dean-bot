@@ -55,7 +55,7 @@ def main():
     """
     token = str(sys.argv[1])
 
-    updater = Updater(token, workers=10)
+    updater = Updater(token, workers=2)
     dp = updater.dispatcher
 
     # Commands
