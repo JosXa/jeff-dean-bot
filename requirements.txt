@@ -1,1 +1,1 @@
-python-telegram-bot==4.0.3
+python-telegram-bot==4.2.0

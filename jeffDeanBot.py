@@ -1,8 +1,11 @@
 import random
 import sys
+import logging
 
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler
+
+logging.basicConfig(filename='bot.log', level=logging.INFO)
 
 
 class Facts(object):
@@ -26,12 +29,12 @@ all_facts = Facts()
 
 
 def error(bot, update, error):
-    print('Update "%s" caused error "%s"' % (update, error))
+    logging.error('Update "%s" caused error "%s"' % (update, error))
 
 
-def help(bot, update):
+def sendHelp(bot, update):
     chat_id = update.message.chat_id
-    print('Sending help...')
+    logging.info('Sending help...')
     bot.sendMessage(chat_id, 'Get the hottest Jeff Dean fact delivered right to your inbox with /fact!',
                     parse_mode=ParseMode.MARKDOWN)
 
@@ -39,7 +42,7 @@ def help(bot, update):
 def sendFact(bot, update):
     chat_id = update.message.chat_id
     fact = random.choice(all_facts.getFacts())
-    print("Sending fact to " + str(chat_id) + ": " + fact)
+    logging.info("Sending fact to " + str(chat_id) + ": " + fact)
     bot.sendMessage(chat_id, fact)
 
 
@@ -57,12 +60,13 @@ def main():
 
     # Commands
     dp.add_handler(CommandHandler("fact", sendFact))
-    dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("help", sendHelp))
 
     dp.add_error_handler(error)
     updater.start_polling()
 
     print('Listening...')
+    logging.info('Listening...')
 
     updater.idle()
 
