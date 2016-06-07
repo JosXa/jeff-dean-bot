@@ -1,56 +1,71 @@
 import random
-import re
-import time
-from pprint import pprint
-from telepot import Bot
+import sys
+
+from telegram import ParseMode
+from telegram.ext import Updater, CommandHandler
 
 
-class JeffDeanBot(object):
-
+class Facts(object):
     def __init__(self):
+        self.facts = []
         self.load_facts()
 
     def load_facts(self):
-
         f = open('facts.txt', mode='r')
         fact_lines = f.readlines()
         f.close()
 
-        # Speichere die gelesenen Facts in der self Variable
-        self.facts = []
         for fact in fact_lines:
             self.facts += [fact]
 
-
-    def sendFact(self, recipient):
-        fact = random.choice(self.facts)
-        print("Sending fact to " + str(recipient) + ": " + random.choice(self.facts))
-        bot.sendMessage(str(recipient), fact)
+    def getFacts(self):
+        return self.facts
 
 
-    def handle_message(self, msg):
-        # print("New message arrived: ")
-        # pprint(msg)
-
-        sender_id = msg['chat']['id']
-
-        if 'text' in msg:
-            text = msg['text']
-
-            # Answer with fact
-            if '/fact' in text:
-                self.sendFact(sender_id)
+all_facts = Facts()
 
 
-jeffDeanBot = JeffDeanBot()
+def error(bot, update, error):
+    print('Update "%s" caused error "%s"' % (update, error))
 
-def handle(msg):
-    jeffDeanBot.handle_message(msg)
 
-bot = Bot('207013186:AAHaGrj8R9Ii8rVaUeS0JIWm5aKtY_BTU0U')
-bot.message_loop(handle)
-print ('Listening ...')
+def help(bot, update):
+    chat_id = update.message.chat_id
+    print('Sending help...')
+    bot.sendMessage(chat_id, 'Get the hottest Jeff Dean fact delivered right to your inbox with /fact!',
+                    parse_mode=ParseMode.MARKDOWN)
 
-# Keep the program running.
-while 1:
-    time.sleep(2) # ms
+
+def sendFact(bot, update):
+    chat_id = update.message.chat_id
+    fact = random.choice(all_facts.getFacts())
+    print("Sending fact to " + str(chat_id) + ": " + fact)
+    bot.sendMessage(chat_id, fact)
+
+
+def main():
+    """
+    get token from command line args
+
+    Usage:
+    $ python3 bot.py [bot_token]
+    """
+    token = str(sys.argv[1])
+
+    updater = Updater(token, workers=10)
+    dp = updater.dispatcher
+
+    # Commands
+    dp.addHandler(CommandHandler("fact", sendFact))
+    dp.addHandler(CommandHandler("help", help))
+
+    dp.addErrorHandler(error)
+    updater.start_polling()
+
+    print('Listening...')
+
+    updater.idle()
+
+
+if __name__ == '__main__':
+    main()
