@@ -2,7 +2,7 @@ import random
 import re
 import time
 from pprint import pprint
-import telepot
+from telepot import Bot
 
 
 class JeffDeanBot(object):
@@ -41,27 +41,13 @@ class JeffDeanBot(object):
             if '/fact' in text:
                 self.sendFact(sender_id)
 
-            # Add a fact
-            match = re.search(r'(/addfact)(.*)', text)
-            if match is not None:
-                fact = match.group(2) # Nur das Zitat, ohne /addfact
-                fact = fact.replace('\n', '') # Zeilenumbrüche raus
-                fact = fact.replace('\r', '') # Zeilenumbrüche raus
-                fact = fact.strip() # Leerzeichen vorne und hinten raus
-                if fact not in self.facts:
-                    self.facts += [fact]
-                    self.save_facts()
-                    bot.sendMessage(str(sender_id), 'The fact has been added.')
-                else:
-                    bot.sendMessage(str(sender_id), 'This fact already exists.')
-
 
 jeffDeanBot = JeffDeanBot()
 
 def handle(msg):
     jeffDeanBot.handle_message(msg)
 
-bot = telepot.Bot('207013186:AAHaGrj8R9Ii8rVaUeS0JIWm5aKtY_BTU0U')
+bot = Bot('207013186:AAHaGrj8R9Ii8rVaUeS0JIWm5aKtY_BTU0U')
 bot.message_loop(handle)
 print ('Listening ...')
 
