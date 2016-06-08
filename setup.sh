@@ -1,3 +1,4 @@
+#!/bin/bash
 export WORKSPACE=`pwd`
 # Create/Activate virtualenv
 virtualenv venv
