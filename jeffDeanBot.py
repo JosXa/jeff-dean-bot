@@ -5,6 +5,7 @@ import logging
 from uuid import uuid4
 from telegram import ParseMode, InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import Updater, CommandHandler, InlineQueryHandler
+from util import levenshteinDistance as distance
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
@@ -58,20 +59,27 @@ def inlinequery(bot, update):
     results_list = list()
 
     facts = all_facts.getFacts()
-
-    search_results = [f for f in facts if query.lower() in f.lower()]
+    search_results = [f for f in facts if distance(query, f, ignore_case=True) < 3 or
+                      query.lower() in f.lower()]
 
     if len(search_results) > 0:
-        facts = search_results
+        facts = search_results[0:49]
     else:
         # 50 random facts
         range_start = random.randint(0, len(facts))
-        facts = facts[range_start:range_start + 50]
+        facts = facts[range_start:range_start + 49]
+        results_list.append(InlineQueryResultArticle(
+            id=uuid4(),
+            title="No search results for '{}'.".format(query),
+            input_message_content=InputTextMessageContent(message_text=getRandomFact()),
+            description='Use a random fact below'
+        ))
+
 
     for fact in facts:
         results_list.append(InlineQueryResultArticle(
             id=uuid4(),
-            title='Your Jeff Dean Fact',
+            title='Jeff Dean Fact',
             input_message_content=InputTextMessageContent(message_text=fact),
             description=fact
         ))
