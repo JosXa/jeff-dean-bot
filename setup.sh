@@ -1,3 +1,4 @@
+#!/bin/bash
 # Kill all
 echo "Killing all previous instances..."
 ps -ef | grep jeffDeanBot.py | grep -v grep | awk '{print $2}' | xargs -r kill -9
