@@ -2,8 +2,9 @@ import random
 import sys
 import logging
 
-from telegram import ParseMode
-from telegram.ext import Updater, CommandHandler
+from uuid import uuid4
+from telegram import ParseMode, InlineQueryResultArticle, InputTextMessageContent
+from telegram.ext import Updater, CommandHandler, InlineQueryHandler
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
@@ -39,11 +40,31 @@ def sendHelp(bot, update):
                     parse_mode=ParseMode.MARKDOWN)
 
 
+def getRandomFact():
+    return random.choice(all_facts.getFacts())
+
+
 def sendFact(bot, update):
     chat_id = update.message.chat_id
-    fact = random.choice(all_facts.getFacts())
+    fact = getRandomFact()
     logging.info("Sending fact to " + str(chat_id) + ": " + fact)
     bot.sendMessage(chat_id, fact)
+
+
+def inlinequery(bot, update):
+    logging.info('Answering inline query')
+    query = update.inline_query.query
+    chat_id = update.inline_query.from_user.id
+    results_list = list()
+    fact = getRandomFact()
+
+    results_list.append(InlineQueryResultArticle(
+        id=uuid4(),
+        title='Your Jeff Dean Fact',
+        input_message_content=InputTextMessageContent(message_text=fact)
+    ))
+
+    bot.answerInlineQuery(update.inline_query.id, results=results_list)
 
 
 def main():
@@ -57,6 +78,7 @@ def main():
 
     updater = Updater(token, workers=2)
     dp = updater.dispatcher
+    dp.addHandler(InlineQueryHandler(inlinequery))
 
     # Commands
     dp.add_handler(CommandHandler("fact", sendFact))
