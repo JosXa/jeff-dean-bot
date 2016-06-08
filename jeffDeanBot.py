@@ -56,14 +56,17 @@ def inlinequery(bot, update):
     query = update.inline_query.query
     chat_id = update.inline_query.from_user.id
     results_list = list()
-    fact = getRandomFact()
 
-    results_list.append(InlineQueryResultArticle(
-        id=uuid4(),
-        title='Your Jeff Dean Fact',
-        input_message_content=InputTextMessageContent(message_text=fact),
-        description=fact
-    ))
+    # 50 random facts
+    facts = all_facts.getFacts()
+    range_start = random.randint(0, len(facts))
+    for fact in facts[range_start:range_start + 50]:
+        results_list.append(InlineQueryResultArticle(
+            id=uuid4(),
+            title='Your Jeff Dean Fact',
+            input_message_content=InputTextMessageContent(message_text=fact),
+            description=fact
+        ))
 
     bot.answerInlineQuery(update.inline_query.id, results=results_list)
 
@@ -79,7 +82,7 @@ def main():
 
     updater = Updater(token, workers=2)
     dp = updater.dispatcher
-    dp.addHandler(InlineQueryHandler(inlinequery))
+    dp.add_handler(InlineQueryHandler(inlinequery))
 
     # Commands
     dp.add_handler(CommandHandler("fact", sendFact))
