@@ -61,7 +61,8 @@ def inlinequery(bot, update):
     results_list.append(InlineQueryResultArticle(
         id=uuid4(),
         title='Your Jeff Dean Fact',
-        input_message_content=InputTextMessageContent(message_text=fact)
+        input_message_content=InputTextMessageContent(message_text=fact),
+        description=fact
     ))
 
     bot.answerInlineQuery(update.inline_query.id, results=results_list)
