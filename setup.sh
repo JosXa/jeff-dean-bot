@@ -1,7 +1,8 @@
 #!/bin/bash
+export APP_NAME="jeffDeanBot.py"
 # Kill all
 echo "Killing all previous instances..."
-ps -ef | grep jeffDeanBot.py | grep -v grep | awk '{print $2}' | xargs -r kill -9
+ps -ef | grep $APP_NAME | grep -v grep | awk '{print $2}' | xargs -r kill -9
 export WORKSPACE=`pwd`
 # Create/Activate virtualenv
 virtualenv venv
