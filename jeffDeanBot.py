@@ -57,10 +57,18 @@ def inlinequery(bot, update):
     chat_id = update.inline_query.from_user.id
     results_list = list()
 
-    # 50 random facts
     facts = all_facts.getFacts()
-    range_start = random.randint(0, len(facts))
-    for fact in facts[range_start:range_start + 50]:
+
+    search_results = [f for f in facts if query.lower() in f.lower()]
+
+    if len(search_results) > 0:
+        facts = search_results
+    else:
+        # 50 random facts
+        range_start = random.randint(0, len(facts))
+        facts = facts[range_start:range_start + 50]
+
+    for fact in facts:
         results_list.append(InlineQueryResultArticle(
             id=uuid4(),
             title='Your Jeff Dean Fact',
