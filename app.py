@@ -1,11 +1,12 @@
 __version__ = "1.0.0"
+import logging
+from os import environ
 import random
 import sys
-import logging
-
+from telegram import InlineQueryResultArticle, InputTextMessageContent, ParseMode
+from telegram.ext import CommandHandler, InlineQueryHandler, Updater
 from uuid import uuid4
-from telegram import ParseMode, InlineQueryResultArticle, InputTextMessageContent
-from telegram.ext import Updater, CommandHandler, InlineQueryHandler
+
 from util import levenshteinDistance as distance
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
@@ -24,7 +25,7 @@ class Facts(object):
         for fact in fact_lines:
             self.facts += [fact]
 
-    def getFacts(self):
+    def get_facts(self):
         return self.facts
 
 
@@ -35,7 +36,7 @@ def error(bot, update, error):
     logging.error('Update "%s" caused error "%s"' % (update, error))
 
 
-def sendHelp(bot, update):
+def send_help(bot, update):
     chat_id = update.message.chat_id
     logging.info('Sending help...')
     bot.sendMessage(
@@ -44,13 +45,13 @@ def sendHelp(bot, update):
         parse_mode=ParseMode.MARKDOWN)
 
 
-def getRandomFact():
-    return random.choice(all_facts.getFacts())
+def get_random_fact():
+    return random.choice(all_facts.get_facts())
 
 
-def sendFact(bot, update):
+def send_fact(bot, update):
     chat_id = update.message.chat_id
-    fact = getRandomFact()
+    fact = get_random_fact()
     logging.info("Sending fact to " + str(chat_id) + ": " + fact)
     bot.sendMessage(chat_id, fact)
 
@@ -58,14 +59,12 @@ def sendFact(bot, update):
 def inlinequery(bot, update):
     logging.info('Answering inline query')
     query = update.inline_query.query
-    chat_id = update.inline_query.from_user.id
     results_list = list()
 
-    facts = all_facts.getFacts()
+    facts = all_facts.get_facts()
     search_results = [
         f for f in facts
-        if distance(query, f, ignore_case=True) < 3 or
-        query.lower() in f.lower()
+        if distance(query, f, ignore_case=True) < 3 or query.lower() in f.lower()
     ]
 
     if len(search_results) > 0:
@@ -79,7 +78,7 @@ def inlinequery(bot, update):
                 id=uuid4(),
                 title="No search results for '{}'.".format(query),
                 input_message_content=InputTextMessageContent(
-                    message_text=getRandomFact()),
+                    message_text=get_random_fact()),
                 description='Use a random fact below'))
 
     for fact in facts:
@@ -95,12 +94,6 @@ def inlinequery(bot, update):
 
 
 def main():
-    """
-    get token from command line args
-
-    Usage:
-    $ python3 bot.py [bot_token]
-    """
     token = "207013186:AAGimWjXwN9PlvHIW_EWfOgbLAQ3SVIESik"
 
     updater = Updater(token, workers=2)
@@ -108,15 +101,19 @@ def main():
     dp.add_handler(InlineQueryHandler(inlinequery))
 
     # Commands
-    dp.add_handler(CommandHandler("fact", sendFact))
-    dp.add_handler(CommandHandler("help", sendHelp))
+    dp.add_handler(CommandHandler("fact", send_fact))
+    dp.add_handler(CommandHandler("help", send_help))
 
     dp.add_error_handler(error)
-    updater.start_polling()
-
-    print('Listening...')
+    # updater.start_polling()
+    #
+    # print('Listening...')
+    # logging.info('Listening...')
+    #
+    # updater.idle()
+    port = int(environ.get('PORT', 5000))
+    updater.start_webhook(listen='0.0.0.0', port=port, url_path=token)
     logging.info('Listening...')
-
     updater.idle()
 
 
