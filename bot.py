@@ -109,7 +109,7 @@ def main():
 
     updater.start_webhook(
         listen='0.0.0.0',
-        port=os.environ.get("DOKKU_PROXY_PORT"),
+        port=int(os.environ.get("DOKKU_PROXY_PORT")),
         url_path=token,
     )
 
