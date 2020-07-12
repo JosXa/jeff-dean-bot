@@ -87,3 +87,4 @@ Jeff Dean quicksorts his laundry.
 The OR ELSE construct had to be removed from ISO C after Jeff Dean used it in Mustang and kernels started panicking in terror.
 Jeff Dean is not afraid of evil constructors. They are afraid of him.
 Jeff Dean doesn't write bugs, just features you are unable to understand.
+Jeff Dean's phone will unlock for his face even in the dark.
