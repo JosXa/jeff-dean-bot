@@ -38,7 +38,9 @@ def send_help(bot, update):
     log.info("Sending help...")
     bot.sendMessage(
         chat_id,
-        "Get the hottest Jeff Dean fact delivered right to your inbox with /fact!",
+        "Get the hottest Jeff Dean fact delivered right to your inbox with /fact!\n\n"
+        "Found more facts? Add them "
+        "[here](https://github.com/JosXa/jeff-dean-bot/blob/master/facts.txt)!",
         parse_mode=ParseMode.MARKDOWN,
         reply_markup=ReplyKeyboardRemove()
     )
