@@ -118,7 +118,7 @@ def main():
                               port=port,
                               url_path=bot_token)
         path = config("HOST") + bot_token
-        print(path)
+        log.info(f"Listening on '{path}'.")
         updater.bot.set_webhook(path)
     else:
         updater.start_polling()
