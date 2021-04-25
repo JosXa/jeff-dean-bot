@@ -1,16 +1,14 @@
-import os
-
 __version__ = "1.0.0"
 import random
-from urllib.parse import urljoin
 from uuid import uuid4
 
-from telegram import InlineQueryResultArticle, InputTextMessageContent, ParseMode
+from decouple import config
+from logzero import logger as log
+from telegram import InlineQueryResultArticle, InputTextMessageContent, ParseMode, \
+    ReplyKeyboardRemove
 from telegram.ext import CommandHandler, InlineQueryHandler, Updater
 
 from util import levenshteinDistance as distance
-from decouple import config
-from logzero import logger as log
 
 
 class Facts(object):
@@ -42,6 +40,7 @@ def send_help(bot, update):
         chat_id,
         "Get the hottest Jeff Dean fact delivered right to your inbox with /fact!",
         parse_mode=ParseMode.MARKDOWN,
+        reply_markup=ReplyKeyboardRemove()
     )
 
 
@@ -106,6 +105,7 @@ def main():
 
     # Commands
     dp.add_handler(CommandHandler("fact", send_fact))
+    dp.add_handler(CommandHandler("start", send_help))
     dp.add_handler(CommandHandler("help", send_help))
 
     dp.add_error_handler(error)
