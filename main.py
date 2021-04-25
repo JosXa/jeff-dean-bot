@@ -19,10 +19,8 @@ class Facts(object):
         self.load_facts()
 
     def load_facts(self):
-        f = open("facts.txt", mode="r")
-        fact_lines = f.readlines()
-        f.close()
-
+        with open("facts.txt", mode="r") as f:
+            fact_lines = f.readlines()
         for fact in fact_lines:
             self.facts += [fact]
 
@@ -61,7 +59,7 @@ def send_fact(bot, update):
 def inlinequery(bot, update):
     log.info("Answering inline query")
     query = update.inline_query.query
-    results_list = list()
+    results_list = []
 
     facts = all_facts.get_facts()
     search_results = [
@@ -70,7 +68,7 @@ def inlinequery(bot, update):
         if distance(query, f, ignore_case=True) < 3 or query.lower() in f.lower()
     ]
 
-    if len(search_results) > 0:
+    if search_results:
         facts = search_results[0:49]
     else:
         # 50 random facts
