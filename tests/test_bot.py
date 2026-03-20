@@ -11,7 +11,7 @@ FACTS = (
 
 
 def test_help_text_points_to_facts_file() -> None:
-    assert HELP_FACTS_URL in HELP_TEXT
+    assert f"[here]({HELP_FACTS_URL})" in HELP_TEXT
 
 
 def test_bot_keeps_facts_for_runtime() -> None:

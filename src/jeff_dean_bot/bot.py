@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from uuid import uuid4
 
 from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
+from telegram.constants import ParseMode
 from telegram.ext import (
     Application,
     ApplicationBuilder,
@@ -25,7 +26,7 @@ LOGGER = logging.getLogger(__name__)
 HELP_FACTS_URL = "https://github.com/JosXa/jeff-dean-bot/blob/master/src/jeff_dean_bot/facts.txt"
 HELP_TEXT = (
     "Get the hottest Jeff Dean fact delivered right to your inbox with /fact!\n\n"
-    f"Found more facts? Add them here: {HELP_FACTS_URL}"
+    f"Found more facts? Add them [here]({HELP_FACTS_URL})"
 )
 
 
@@ -45,7 +46,11 @@ class JeffDeanBot:
             return
 
         LOGGER.info("Sending help to chat %s", message.chat_id)
-        await message.reply_text(HELP_TEXT, disable_web_page_preview=True)
+        await message.reply_text(
+            HELP_TEXT,
+            disable_web_page_preview=True,
+            parse_mode=ParseMode.MARKDOWN,
+        )
 
     async def send_fact(
         self,
