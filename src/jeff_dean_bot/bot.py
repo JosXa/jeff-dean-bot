@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-import os
 import random
 from typing import TYPE_CHECKING
 from uuid import uuid4
@@ -20,6 +19,8 @@ from jeff_dean_bot.facts import fallback_facts, load_packaged_facts, random_fact
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
+
+    from jeff_dean_bot.config import Settings
 
 LOGGER = logging.getLogger(__name__)
 
@@ -120,7 +121,30 @@ async def handle_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> No
     LOGGER.exception("Unhandled update %r", update, exc_info=context.error)
 
 
-def build_default_application() -> Application:
-    token = os.environ["BOT_TOKEN"]
+def build_default_application(settings: Settings) -> Application:
     facts = load_packaged_facts()
-    return JeffDeanBot(facts).build_application(token)
+    return JeffDeanBot(facts).build_application(settings.bot_token)
+
+
+def run_bot(settings: Settings) -> None:
+    application = build_default_application(settings)
+    if settings.webhook is None:
+        LOGGER.info("Starting polling bot")
+        application.run_polling(drop_pending_updates=True)
+        return
+
+    LOGGER.info(
+        "Starting webhook bot on %s:%s%s",
+        settings.webhook.listen,
+        settings.webhook.port,
+        settings.webhook.path,
+    )
+    application.run_webhook(
+        listen=settings.webhook.listen,
+        port=settings.webhook.port,
+        url_path=settings.webhook.url_path,
+        webhook_url=settings.webhook.webhook_url,
+        drop_pending_updates=True,
+        secret_token=settings.webhook.secret_token,
+        allowed_updates=Update.ALL_TYPES,
+    )

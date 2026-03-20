@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import logging
 
-from jeff_dean_bot.bot import build_default_application
+from jeff_dean_bot.bot import run_bot
+from jeff_dean_bot.config import Settings
 
 
 def main() -> int:
@@ -10,8 +11,8 @@ def main() -> int:
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
         level=logging.INFO,
     )
-    application = build_default_application()
-    application.run_polling(drop_pending_updates=True)
+    settings = Settings.from_env()
+    run_bot(settings)
     return 0
 
 
