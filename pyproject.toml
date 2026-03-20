@@ -1,17 +1,97 @@
-[tool.poetry]
+[project]
 name = "jeff-dean-bot"
-version = "0.1.0"
-description = ""
-authors = ["Joscha Götzer <joscha.goetzer@gmail.com>"]
+version = "0.2.0"
+description = "Telegram bot serving Jeff Dean facts"
+readme = "README.md"
+authors = [
+  { name = "Joscha Götzer", email = "info@josxa.dev" },
+]
+requires-python = ">=3.11"
+dependencies = [
+  "python-telegram-bot>=22.5,<23",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-python-decouple = "^3.3"
-logzero = "^1.5.0"
-python-telegram-bot = "^12.8"
+[project.scripts]
+jeff-dean-bot = "jeff_dean_bot.__main__:main"
 
-[tool.poetry.dev-dependencies]
+[dependency-groups]
+dev = [
+  "pre-commit>=4.3.0",
+  "pytest>=8.4.2",
+  "pytest-asyncio>=1.2.0",
+  "ruff>=0.13.2",
+  "ty>=0.0.1a19",
+]
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jeff_dean_bot"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/jeff_dean_bot/facts.txt" = "jeff_dean_bot/facts.txt"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/jeff_dean_bot/facts.txt",
+  "src/jeff_dean_bot/**/*.py",
+  "tests/**/*.py",
+  ".github/workflows/*.yml",
+  ".opencode/opencode.jsonc",
+  ".pre-commit-config.yaml",
+  "AGENTS.md",
+  "Dockerfile",
+  "mise.toml",
+  "README.md",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+  "E",
+  "W",
+  "F",
+  "I",
+  "B",
+  "C4",
+  "UP",
+  "ARG",
+  "SIM",
+  "TCH",
+  "PTH",
+  "RUF",
+  "N",
+  "A",
+  "COM",
+  "T20",
+  "Q",
+  "RET",
+  "ERA",
+  "TRY",
+  "FLY",
+  "PERF",
+  "FURB",
+  "PIE",
+  "RSE",
+  "G",
+  "DTZ",
+  "INP",
+]
+ignore = ["COM812"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.ty.rules]
+all = "error"

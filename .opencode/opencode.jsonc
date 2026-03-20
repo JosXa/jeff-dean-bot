@@ -1,0 +1,13 @@
+{
+  "lsp": {
+    "pyright": { "disabled": true },
+    "ruff": {
+      "command": ["uv", "run", "ruff", "server"],
+      "extensions": [".py", ".pyi"]
+    },
+    "ty": {
+      "command": ["uv", "run", "ty", "server"],
+      "extensions": [".py", ".pyi"]
+    }
+  }
+}

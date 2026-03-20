@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: mise-check
+        name: mise run check
+        entry: mise run check
+        language: system
+        pass_filenames: false

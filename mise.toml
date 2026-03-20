@@ -1,0 +1,19 @@
+[tasks.lint]
+description = "Run Ruff lint checks"
+run = "uv run ruff check --fix ."
+
+[tasks.format]
+description = "Run Ruff formatter"
+run = "uv run ruff format ."
+
+[tasks.typecheck]
+description = "Run ty"
+run = "uv run ty check"
+
+[tasks.check]
+description = "Run lint, format, and type checks"
+run = [
+  "uv run ruff check --fix .",
+  "uv run ruff format .",
+  "uv run ty check",
+]

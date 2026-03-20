@@ -1,0 +1,12 @@
+.git
+.github
+.venv
+.pytest_cache
+.ruff_cache
+.python-version
+__pycache__
+*.pyc
+.env
+.idea
+tests
+tmp
