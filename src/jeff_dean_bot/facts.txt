@@ -1,9 +1,9 @@
 Jeff Dean proved that P=NP when he solved all NP problems in polynomial time on a whiteboard.
 Jeff Dean's PIN is the last 4 digits of pi.
-When Jeff gives a seminar at Stanford, it's so crowded Don Knuth has to sit on the floor. (TRUE)
+When Jeff gives a seminar at Stanford, it's so crowded Don Knuth has to sit on the floor. (real)
 Jeff Dean once bit a spider, the spider got super powers and C readability
 Once, in early 2002, when the index servers went down, Jeff Dean answered user queries manually for two hours. Evals showed a quality improvement of 5 points.
-Jeff Dean got promoted to level 11 in a system where max level is 10. (True.)
+Jeff Dean got promoted to level 11 in a system where max level is 10. (real)
 Google Search was Jeff Dean's Noogler Project
 Jeff Dean has punch card readability.
 Jeff Dean puts his pants on one leg at a time, but if he had more than two legs, you would see that his approach is actually O(log n)
@@ -13,7 +13,7 @@ Jeff Dean compiles and runs his code before submitting, but only to check for co
 Unsatisfied with constant time, Jeff Dean created the world's first O(1/n) algorithm.
 Jeff Dean has binary readability.
 Jeff Dean has binary writability.
-When Jeff Dean goes on vacation, production services across Google mysteriously stop working within a few days. This is actually true.
+When Jeff Dean goes on vacation, production services across Google mysteriously stop working within a few days. (real)
 Jeff Dean once shifted a bit so hard it ended up on another computer.
 During his own Google interview, Jeff Dean was asked the implications if P=NP were true. He said "P = 0 or N = 1." Then, before the interviewer had even finished laughing, Jeff examined Google's public certificate and wrote the private key on the whiteboard.
 You use 10% of your brain. The other 90% is running one of Jeff's mapreduce jobs.
@@ -82,9 +82,39 @@ Google: it's basically a Jeff Dean's side project.
 Jeff Dean has to unoptimize his code so that reviewers believe it was written by a human.
 Websearch is just a large unittest Jeff wrote for his real app.
 Jeff Dean doesn't need speakers or headphones. He just types "cat *.mp3", glances at the screen, and his brain decodes the music in the background while he works.
-Jeff Dean has Perl Readability. (TRUE)
+Jeff Dean has Perl Readability. (real)
 Jeff Dean quicksorts his laundry.
 The OR ELSE construct had to be removed from ISO C after Jeff Dean used it in Mustang and kernels started panicking in terror.
 Jeff Dean is not afraid of evil constructors. They are afraid of him.
 Jeff Dean doesn't write bugs, just features you are unable to understand.
 Jeff Dean's phone will unlock for his face even in the dark.
+Jeff Dean eschews both Emacs and VI. He types his code into zcat, because it's faster that way.
+When Jeff Dean sends an Ethernet frame, there are no collisions because the competing frames retreat back up into the buffer memory on their source NICs.
+Jeff once simultaneously reduced all binary sizes by 3% and raised the severity of a previously known low-priority Python bug to critical-priority in a single change that contained no Python code.
+One day Jeff Dean grabbed his Etch-a-Sketch instead of his laptop on his way out the door. On his way back home to get his real laptop, he programmed the Etch-a-Sketch to play Tetris.
+The x86-64 spec includes several undocumented instructions marked "private use." They are actually for Jeff Dean's use.
+Knuth mailed a copy of The Art of Computer Programming to Google. Jeff Dean autographed it and mailed it back.
+When he heard that Jeff Dean's autobiography would be exclusive to the platform, Richard Stallman bought a Kindle.
+Jeff Dean can losslessly compress random data.
+When asked if the facts about him are true, Jeff Dean responded, "111111." While the interviewer was still trying to figure out what he meant, he clarified: "Every single bit of it is true."
+Jeff Dean mines bitcoins. In his head.
+Jeff Dean traps the KILL signal.
+Jeff Dean's programs don't SEGFAULT. The memory rearranges itself in order to put data and code where it belongs.
+When Jeff Dean commits code in his branch, the master branch raises a merge request for his approval.
+All pointers point to Jeff Dean.
+Jeff Dean can write infinite recursion functions... and have them return.
+Jeff Dean can unit test entire applications with a single assert.
+Jeff Dean can determine the exact position and velocity of an electron.
+Jeff Dean doesn't kill processes, he slays them.
+Why did Vint Cerf invent the Internet? Because Jeff Dean didn't have time.
+All Jeff Dean's code is pure. For fun, he once wrote a function with a side effect. That side effect is known as Gmail.
+Jeff Dean has gone to /dev/null and come back.
+Jeff Dean sorts his phone contacts by their vCard's MD5 checksums.
+The needle in the haystack found Jeff Dean.
+All of Google App Engine is actually hosted from Jeff Dean's Nexus S.
+You name three pointers Einstein, Euler, and Turing. When you dereference them, all you get is Jeff Dean.
+Jeff Dean has access to the priority above P1. He's only used it once. It's why February only has 28 days.
+Jeff Dean doesn't use a compiler; he just glares at his source code until it executes.
+Jeff Dean once optimized a sleep(10) call to return in 5 seconds.
+Jeff Dean's keyboard doesn't have a Backspace key; he simply doesn't make mistakes.
+Jeff Dean read the instructions on his family-sized bottle of shampoo in the shower. They said "lather, rinse, repeat." He almost died of hypothermia, but wrote a goto in conditioner just in time.
